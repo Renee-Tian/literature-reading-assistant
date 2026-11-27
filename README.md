@@ -108,14 +108,14 @@ literature-reading-assistant/
 
 - [x] 项目总体架构规划
 - [x] 项目目录结构设计
-- [ ] Flask 基础工程建设
-- [ ] 文献管理与 PDF 解析
-- [ ] 大语言模型接入
-- [ ] RAG 知识检索
-- [ ] 三个专业 Agent 开发
-- [ ] Supervisor 与 LangGraph 多智能体协作
-- [ ] 前端开发与系统整合
-- [ ] 系统测试与实验评价
+- [x] Flask 基础工程建设
+- [x] 文献管理与 PDF 解析
+- [x] 大语言模型接入
+- [x] RAG 知识检索
+- [x] 三个专业 Agent 开发
+- [x] Supervisor 与 LangGraph 多智能体协作
+- [x] 前端开发与系统整合
+- [x] 系统测试与实验评价
 
 ## 8. 项目目标
 
