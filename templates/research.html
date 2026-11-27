@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}研究分析｜Literature AI{% endblock %}
+{% block page_title %}研究分析{% endblock %}
+{% block page_desc %}由 Supervisor 调度 Research Agent 完成方法与实验分析{% endblock %}
+
+{% block content %}
+<div class="alert-inline" id="researchAlert" role="alert">
+    <strong>提示：</strong><span id="researchAlertText"></span>
+</div>
+
+<div class="alert-inline is-info" id="researchNotice" role="status" aria-live="polite">
+    <strong id="researchNoticeTitle">执行中：</strong><span id="researchNoticeText"></span>
+</div>
+
+<section class="panel">
+    <div class="panel-head">
+        <div>
+            <h2>分析任务</h2>
+            <p>请求统一提交给 Supervisor，由它决定是否调度 Research Agent</p>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form id="researchForm">
+            <div class="form-grid">
+                <div class="form-row">
+                    <label class="form-label" for="researchPaperSelect">论文</label>
+                    <select id="researchPaperSelect" class="form-select">
+                        <option value="">正在加载论文…</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label class="form-label" for="researchTopK">检索条数</label>
+                    <select id="researchTopK" class="form-select">
+                        <option value="3">3 条</option>
+                        <option value="5">5 条</option>
+                        <option value="8" selected>8 条</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label" for="researchQuestion">分析任务</label>
+                <textarea id="researchQuestion" rows="3"
+                          placeholder="例如：请分析这篇论文的研究方法、算法、实验设计、数据集、评价指标与主要结果。"></textarea>
+                <div class="form-help-row">
+                    <button type="button" class="link-button" id="fillTemplateBtn">填入推荐任务</button>
+                    <span class="form-note">任务原文会提交给 Supervisor，不做前端改写。</span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-brand" id="researchSubmitBtn">开始分析</button>
+        </form>
+    </div>
+</section>
+
+<section class="panel" id="researchResultPanel">
+    <div class="panel-head">
+        <div>
+            <h2>分析结果</h2>
+            <p id="researchResultHint">尚未执行</p>
+        </div>
+    </div>
+    <div id="researchResult">
+        <div class="empty-state">
+            <strong>还没有分析结果</strong>
+            <span>选择论文、填写任务后点击「开始分析」。生成耗时取决于任务复杂度与论文长度，通常需要数分钟。</span>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/research.js') }}"></script>
+{% endblock %}

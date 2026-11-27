@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Agent 协作｜Literature AI{% endblock %}
+{% block page_title %}Agent 协作{% endblock %}
+{% block page_desc %}Supervisor 任务规划与 Reading / QA / Research 执行可视化{% endblock %}
+
+{% block content %}
+<div class="alert-inline" id="agentsAlert" role="alert">
+    <strong>提示：</strong><span id="agentsAlertText"></span>
+</div>
+
+<div class="alert-inline is-info" id="agentsNotice" role="status" aria-live="polite">
+    <strong id="agentsNoticeTitle">执行中：</strong><span id="agentsNoticeText"></span>
+</div>
+
+<section class="panel">
+    <div class="panel-head">
+        <div>
+            <h2>多智能体工作流</h2>
+            <p>统一入口：所有请求交给 Supervisor 规划与调度</p>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form id="agentsForm">
+            <div class="form-grid">
+                <div class="form-row">
+                    <label class="form-label" for="agentsPaperSelect">论文</label>
+                    <select id="agentsPaperSelect" class="form-select">
+                        <option value="">正在加载论文…</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label class="form-label">会话 ID</label>
+                    <div class="thread-row">
+                        <code class="thread-id" id="threadIdLabel">—</code>
+                        <button type="button" class="btn-ghost" id="newThreadBtn">新建会话</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label" for="agentsQuestion">问题</label>
+                <textarea id="agentsQuestion" rows="3"
+                          placeholder="例如：请通读这篇论文，概括研究背景、核心方法、实验与结论。"></textarea>
+                <div class="form-help-row">
+                    <span class="form-note">
+                        同一会话 ID 只能用于同一篇论文，切换论文会自动新建会话；多轮追问会沿用当前会话。
+                    </span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-brand" id="agentsSubmitBtn">执行工作流</button>
+        </form>
+    </div>
+</section>
+
+<section class="panel">
+    <div class="panel-head">
+        <div>
+            <h2>执行过程与结果</h2>
+            <p id="agentsResultHint">尚未执行</p>
+        </div>
+    </div>
+    <div id="agentsResult">
+        <div class="empty-state">
+            <strong>还没有执行记录</strong>
+            <span>提交问题后，这里会展示 Supervisor 的真实规划、实际调度的 Agent 与其模型用量。</span>
+        </div>
+    </div>
+</section>
+
+<section class="panel">
+    <div class="panel-head">
+        <div>
+            <h2>本页执行记录</h2>
+            <p>仅保存在当前页面，刷新后清空</p>
+        </div>
+    </div>
+    <div id="agentsHistory">
+        <div class="empty-state">暂无记录</div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/agents.js') }}"></script>
+{% endblock %}

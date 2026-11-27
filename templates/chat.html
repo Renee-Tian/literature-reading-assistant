@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}智能问答｜Literature AI{% endblock %}
+{% block page_title %}智能问答{% endblock %}
+{% block page_desc %}基于 Dense + Sparse + RRF 检索的论文问答与原文引用{% endblock %}
+
+{% block content %}
+<div class="alert-inline" id="chatAlert" role="alert">
+    <strong>提示：</strong><span id="chatAlertText"></span>
+</div>
+
+<div class="chat-layout" id="chatRoot">
+    <section class="panel chat-panel">
+        <div class="chat-toolbar">
+            <select id="paperSelect" class="form-select form-select-sm" aria-label="选择论文">
+                <option value="">正在加载论文…</option>
+            </select>
+            <select id="topKSelect" class="form-select form-select-sm" aria-label="检索数量">
+                <option value="3">召回 3 条</option>
+                <option value="5" selected>召回 5 条</option>
+                <option value="8">召回 8 条</option>
+            </select>
+            <span class="chat-hint" id="paperHint">—</span>
+            <button class="btn-ghost" type="button" id="clearChatBtn">清空当前对话</button>
+        </div>
+
+        <div class="chat-stream" id="chatStream">
+            <div class="empty-state">
+                <strong>开始提问</strong>
+                <span>选择论文后提问，回答会附带原文证据编号与页码。</span>
+            </div>
+        </div>
+
+        <form class="chat-composer" id="qaForm">
+            <textarea id="questionInput" rows="2"
+                      placeholder="基于论文原文提问，例如：该方法使用了哪些数据集和评价指标？"
+                      aria-label="输入问题"></textarea>
+            <div class="composer-actions">
+                <span class="composer-hint">Enter 发送 · Shift + Enter 换行</span>
+                <button type="submit" class="btn-brand" id="askBtn">发送</button>
+            </div>
+        </form>
+    </section>
+
+    <aside class="panel chat-side">
+        <div class="panel-head">
+            <div>
+                <h2>会话信息</h2>
+                <p id="sideHint">—</p>
+            </div>
+        </div>
+        <div class="chat-side-body">
+            <section class="chat-side-section">
+                <h3>当前论文</h3>
+                <dl class="meta-list" id="sideMeta">
+                    <dt>状态</dt>
+                    <dd>加载中…</dd>
+                </dl>
+            </section>
+
+            <section class="chat-side-section">
+                <h3>历史问答</h3>
+                <div id="historyList">
+                    <div class="empty-state">正在加载…</div>
+                </div>
+            </section>
+        </div>
+    </aside>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}

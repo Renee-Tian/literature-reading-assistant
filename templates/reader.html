@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}智能阅读｜Literature AI{% endblock %}
+{% block page_title %}智能阅读{% endblock %}
+{% block page_desc %}PDF 在线阅读与已有阅读报告{% endblock %}
+
+{% block content %}
+<div class="alert-inline" id="readerAlert" role="alert">
+    <strong>提示：</strong><span id="readerAlertText"></span>
+</div>
+
+<div class="page-intro">
+    <div>
+        <h2 id="paperTitle">正在加载论文…</h2>
+        <p id="paperSubtitle">—</p>
+    </div>
+    <div class="intro-actions">
+        <a class="btn-ghost" href="{{ url_for('page.papers') }}">返回论文管理</a>
+        <a class="btn-ghost" id="openPdfLink" href="#" target="_blank" rel="noopener">新窗口打开 PDF</a>
+    </div>
+</div>
+
+<div class="reader-layout" id="readerRoot" data-paper-id="{{ paper_id }}">
+    <section class="panel reader-panel">
+        <div class="pdf-toolbar">
+            <div class="toolbar-group">
+                <button class="pdf-tool-btn" type="button" id="prevPageBtn" disabled>上一页</button>
+                <input class="pdf-page-input" id="pageInput" type="number" min="1"
+                       value="1" aria-label="跳转到指定页码">
+                <span class="pdf-page-total" id="pageTotal">/ —</span>
+                <button class="pdf-tool-btn" type="button" id="nextPageBtn" disabled>下一页</button>
+            </div>
+            <div class="toolbar-group">
+                <button class="pdf-tool-btn" type="button" id="zoomOutBtn" disabled aria-label="缩小">−</button>
+                <span class="pdf-zoom" id="zoomLabel">—</span>
+                <button class="pdf-tool-btn" type="button" id="zoomInBtn" disabled aria-label="放大">+</button>
+                <button class="pdf-tool-btn" type="button" id="fitWidthBtn" disabled>适应宽度</button>
+            </div>
+        </div>
+
+        <div class="pdf-viewport" id="pdfViewport">
+            <canvas id="pdfCanvas" aria-label="论文 PDF 页面"></canvas>
+            <div class="pdf-overlay" id="pdfOverlay">正在加载 PDF 文件…</div>
+        </div>
+    </section>
+
+    <aside class="panel reader-side">
+        <div class="panel-head">
+            <div>
+                <h2>论文信息与阅读报告</h2>
+                <p id="reportMeta">—</p>
+            </div>
+        </div>
+        <div class="reader-side-body">
+            <section class="reader-section">
+                <dl class="meta-list" id="paperMeta">
+                    <dt>状态</dt>
+                    <dd>加载中…</dd>
+                </dl>
+            </section>
+
+            <section class="reader-section" id="reportSection">
+                <div class="empty-state">正在加载阅读报告…</div>
+            </section>
+        </div>
+    </aside>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='vendor/pdfjs/pdf.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/reader.js') }}"
+        data-worker-src="{{ url_for('static', filename='vendor/pdfjs/pdf.worker.min.js') }}"></script>
+{% endblock %}

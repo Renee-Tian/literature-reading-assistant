@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Literature AI 学术文献阅读工作台{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+</head>
+<body>
+<div class="app-shell">
+
+    <aside class="app-sidebar" id="appSidebar">
+        <div class="app-brand">
+            <span class="app-brand-mark">LA</span>
+            <span class="app-brand-text">
+                <span class="app-brand-name">Literature AI</span>
+                <span class="app-brand-sub">学术文献阅读工作台</span>
+            </span>
+        </div>
+
+        <nav class="app-nav" aria-label="主导航">
+            {% set nav_items = [
+                ('system.index', '工作台首页', 'M3 10.5 12 3l9 7.5M5 9.5V21h5v-6h4v6h5V9.5'),
+                ('page.papers', '论文管理', 'M7 3h7l5 5v13H7zM14 3v5h5'),
+                ('page.chat', '智能问答', 'M4 5h16v10H9l-5 4z'),
+                ('page.research', '研究分析', 'M4 20V6m0 14h16M8 16l4-5 3 3 5-7'),
+                ('page.agents', 'Agent 协作', 'M12 3v4m0 10v4M3 12h4m10 0h4M6.6 6.6l2.7 2.7m5.4 5.4 2.7 2.7m0-10.8-2.7 2.7m-5.4 5.4-2.7 2.7')
+            ] %}
+            {% for endpoint, label, icon_path in nav_items %}
+            {% set is_active = request.endpoint == endpoint
+                or (endpoint == 'page.papers' and request.endpoint == 'page.reader') %}
+            <a class="app-nav-item{% if is_active %} is-active{% endif %}"
+               href="{{ url_for(endpoint) }}"
+               {% if is_active %}aria-current="page"{% endif %}>
+                <svg class="app-nav-icon" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="1.6"
+                     stroke-linecap="round" stroke-linejoin="round"
+                     aria-hidden="true" focusable="false">
+                    <path d="{{ icon_path }}"></path>
+                </svg>
+                <span>{{ label }}</span>
+            </a>
+            {% endfor %}
+        </nav>
+
+        <div class="app-sidebar-foot">
+            <span class="app-sidebar-tag">毕业设计 · 本地演示</span>
+            <span class="app-sidebar-meta">Supervisor + 3 Agents</span>
+        </div>
+    </aside>
+
+    <div class="app-mask" id="appMask" aria-hidden="true"></div>
+
+    <div class="app-main">
+        <header class="app-topbar">
+            <button class="app-menu-btn" id="appMenuBtn" type="button"
+                    aria-label="展开导航菜单" aria-controls="appSidebar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.8" stroke-linecap="round" aria-hidden="true"
+                     focusable="false">
+                    <path d="M4 7h16M4 12h16M4 17h16"></path>
+                </svg>
+            </button>
+
+            <div class="app-topbar-title">
+                <h1>{% block page_title %}工作台首页{% endblock %}</h1>
+                <p>{% block page_desc %}{% endblock %}</p>
+            </div>
+
+            <div class="app-status" id="appStatus" role="status" aria-live="polite">
+                <span class="status-dot is-pending"></span>
+                <span class="status-text">后端状态检测中</span>
+            </div>
+        </header>
+
+        <main class="app-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='vendor/bootstrap/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/api.js') }}"></script>
+<script src="{{ url_for('static', filename='js/layout.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}工作台首页｜Literature AI{% endblock %}
+{% block page_title %}工作台首页{% endblock %}
+{% block page_desc %}论文、检索、问答与多智能体协作的真实运行概览{% endblock %}
+
+{% block content %}
+<div class="alert-inline" id="statsAlert" role="alert">
+    <strong>统计加载失败：</strong><span id="statsAlertText"></span>
+</div>
+
+<section class="stat-grid" aria-label="系统统计">
+    <article class="stat-card">
+        <span class="stat-label">论文总数</span>
+        <strong class="stat-value is-muted" data-stat="paper_total">—</strong>
+        <span class="stat-hint">papers 表记录数</span>
+    </article>
+    <article class="stat-card">
+        <span class="stat-label">解析完成</span>
+        <strong class="stat-value is-muted" data-stat="paper_completed">—</strong>
+        <span class="stat-hint">status = completed</span>
+    </article>
+    <article class="stat-card">
+        <span class="stat-label">待处理</span>
+        <strong class="stat-value is-muted" data-stat="paper_uploaded">—</strong>
+        <span class="stat-hint">status = uploaded</span>
+    </article>
+    <article class="stat-card">
+        <span class="stat-label">处理失败</span>
+        <strong class="stat-value is-muted" data-stat="paper_failed">—</strong>
+        <span class="stat-hint">status = failed</span>
+    </article>
+    <article class="stat-card">
+        <span class="stat-label">文本块总数</span>
+        <strong class="stat-value is-muted" data-stat="chunk_total">—</strong>
+        <span class="stat-hint">paper_chunks 表记录数</span>
+    </article>
+    <article class="stat-card">
+        <span class="stat-label">向量库记录</span>
+        <strong class="stat-value is-muted" data-stat="vector_total">—</strong>
+        <span class="stat-hint">ChromaDB collection</span>
+    </article>
+    <article class="stat-card">
+        <span class="stat-label">问答记录</span>
+        <strong class="stat-value is-muted" data-stat="qa_record_total">—</strong>
+        <span class="stat-hint">qa_records 表记录数</span>
+    </article>
+    <article class="stat-card">
+        <span class="stat-label">阅读报告</span>
+        <strong class="stat-value is-muted" data-stat="reading_report_total">—</strong>
+        <span class="stat-hint">reading_reports 表记录数</span>
+    </article>
+</section>
+
+<div class="layout-2">
+    <section class="panel">
+        <div class="panel-head">
+            <div>
+                <h2>最近上传论文</h2>
+                <p>按上传时间倒序，最多 5 条</p>
+            </div>
+            <a class="btn-ghost" href="{{ url_for('page.papers') }}">论文管理</a>
+        </div>
+        <div id="recentPapers">
+            <div class="empty-state">正在加载…</div>
+        </div>
+    </section>
+
+    <section class="panel">
+        <div class="panel-head">
+            <div>
+                <h2>服务状态</h2>
+                <p>实时检查后端与数据库连通性</p>
+            </div>
+        </div>
+        <ul class="status-list" id="serviceStatus">
+            <li>
+                <span class="status-name">正在检测…</span>
+                <span class="status-value">—</span>
+            </li>
+        </ul>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
