@@ -1,0 +1,36 @@
+# Python 缓存文件
+__pycache__/
+*.py[cod]
+
+# Python 虚拟环境
+.venv/
+venv/
+
+# 环境变量和密钥
+.env
+.env.*
+!.env.example
+
+# 测试与代码检查缓存
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# 用户上传的论文文件
+storage/uploads/*
+!storage/uploads/.gitkeep
+
+# 向量数据库和索引文件
+storage/vector_store/*
+!storage/vector_store/.gitkeep
+
+# 日志文件
+logs/
+*.log
+
+# IDE 配置
+.idea/
+
+# Windows 系统文件
+Thumbs.db
+Desktop.ini
